@@ -2,29 +2,11 @@ import React, { useState, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import useForm from '../hooks/formHook.js';
 
 
 export default function TodoForm(props) {
-  const [item, setItem] = useState({})
-
-  const handleInputChange = e => {
-    console.log([e.target.name], e.target.value);
-    setItem({ ...item, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    e.target.reset();
-    console.log(item);
-    if(!item['difficulty']) {
-      setItem({ ...item, 'difficulty': 1 })
-    }
-    console.log(item);
-    props.addItem(item);
-    const newItem = {};
-    setItem(newItem);
-  };
-
+  const [handleSubmit,handleChange] = useForm(props.addItem);
 
   return (
     <>
@@ -35,7 +17,7 @@ export default function TodoForm(props) {
           <Form.Label className="mt-3">To Do List Item</Form.Label>
           <Form.Control
             name="text"
-            onChange={handleInputChange}
+            onChange={handleChange}
             placeholder="To Do List Item" />
         </Form.Group>
 
@@ -49,7 +31,7 @@ export default function TodoForm(props) {
             min="1"
             max="5"
             name="difficulty"
-            onChange={handleInputChange} />
+            onChange={handleChange} />
           <span className="font-weight-normal indigo-text ml-2 mt-0">5</span>
         </Form.Group>
         <Form.Group
@@ -59,7 +41,7 @@ export default function TodoForm(props) {
             type="text"
             name="assignee"
             placeholder="Assign To"
-            onChange={handleInputChange} />
+            onChange={handleChange} />
         </Form.Group>
         <Button className="mt-2" aria-controls="example-fade-text" variant="primary" type="submit">
           Add Item

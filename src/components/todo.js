@@ -3,12 +3,19 @@ import TodoForm from './form.js';
 import TodoList from './list.js';
 import uuid from 'react-uuid';
 import Navbar from 'react-bootstrap/Navbar';
+import useForm from '../hooks/formHook.js';
 import './todo.scss'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './todo.scss';
 
 function ToDo() {
   const [list, setList] = useState([]);
+  const [values] = useForm(eat);
+
+
+  function eat(food) {
+    setList(food);
+  }
 
   const _addItem = (item) => {
     item._id = uuid();
@@ -81,7 +88,9 @@ function ToDo() {
       <section className="todo">
 
         <div>
-          <TodoForm addItem={_addItem} />
+          <TodoForm 
+          addItem={_addItem} 
+          />
         </div>
 
         <div>
