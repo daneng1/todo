@@ -1,0 +1,112 @@
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@800&display=swap');
+
+$color-primary: rgb(42, 40, 78);
+
+body, html {
+  height: 100%;
+  margin: 0;
+  padding:0;
+  width: 100%;
+}
+.todo-details {
+  display:flex;
+  flex-direction:column;
+
+  header {
+      display:flex;
+      flex-direction:row;
+      justify-content:space-between;
+      padding:.5em 1em;
+  }
+
+  .item {
+      flex:1;
+      padding: 1em;
+  }
+
+}
+.brand{
+  font-size: 5vw;
+  margin-left: 27px;
+  color: $color-primary;
+  font-family: 'Kanit', sans-serif;
+}
+.brand:hover{
+  color: $color-primary;
+  
+}
+.counter-Header {
+  margin-left: 27px;
+  margin-top: 20px;
+  font-size: 3vw;
+}
+.todo {
+
+  display:flex;
+  flex-direction:row;
+  justify-content: flex-start;
+  margin: 2em;
+
+  form {
+
+      display:flex;
+      flex-direction:column;
+      margin-right: 2em;
+
+      label {
+          display: flex;
+          flex-direction:column;
+          margin-bottom: 1em;
+      }
+  }
+
+  ul {
+      list-style-type:none;
+      margin:0;
+      padding:0;
+
+      li {
+
+          align-items: center;
+          display:flex;
+          flex-direction:row;
+          font-size: .75em;
+          margin: .75em .5em;
+
+          &.complete-true {
+            span {
+              background: pink;
+              text-decoration:line-through;
+              &:hover {
+                 background: seagreen;
+              }
+            }
+          }
+
+          span {
+              background: #e0e0e0;
+              cursor:pointer;
+              &:hover {
+                  background: pink;
+              }
+          }
+           span, input {
+               border: .5px solid #eee;
+               display:inline-block;
+               padding: .2em .25em;
+               width: 300px;
+           }
+
+          button {
+              background: transparent;
+              border:none;
+              color:blue;
+              cursor:pointer;
+              padding:0;
+              margin: 0 .75em;
+          }
+
+      }
+  }
+
+}
