@@ -68,13 +68,13 @@ function ToDo() {
 
   return (
     <>
-      <Navbar bg="light" expand="lg">
-        <Navbar.Brand className="brand" href="#home">React To Do List</Navbar.Brand>
+      <Navbar bg="primary" expand="lg">
+        <Navbar.Brand className="brand" href="#home">HOME</Navbar.Brand>
         
       </Navbar>
       <header>
         <h6 className="counter-Header">
-          There are {list.filter(item => !item.complete).length} Items To Complete
+          To Do List Manager ({list.filter(item => !item.complete).length})
           </h6>
       </header>
 
