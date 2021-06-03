@@ -1,7 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import TodoForm from './form.js';
 import TodoList from './list.js';
-
+import Navbar from 'react-bootstrap/Navbar';
+import useForm from '../hooks/formHook.js';
+import './todo.scss'
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './todo.scss';
 
 const todoAPI = 'https://api-js401.herokuapp.com/api/v1/todo';
@@ -62,26 +65,51 @@ const ToDo = () => {
       .catch(console.error);
   };
 
+  const updateItem = (id, val) => {
+    let item = list.filter(i => i._id === id)[0] || {};
+
+    console.log(val);
+    if (item._id) {
+      item.text = val;
+      let newList = list.map(listItem => listItem._id === item._id ? item : listItem);
+      setList(newList);
+    }
+  }
+
+  const deleteItem = id => {
+    let item = list.filter(i => i._id === id)[0] || {};
+
+    if (item._id) {
+      let newList = list.filter(listItem => listItem._id !== id);
+      setList(newList);
+    }
+  }
+
   useEffect(_getTodoItems, []);
 
   return (
     <>
+      <Navbar bg="primary" expand="lg">
+        <Navbar.Brand className="brand" href="#home">HOME</Navbar.Brand>
+      </Navbar>
       <header>
-        <h2>
-          There are {list.filter(item => !item.complete).length} Items To Complete
-        </h2>
+        <h6 className="counter-Header">
+          To Do List Manager ({list.filter(item => !item.complete).length})
+        </h6>
       </header>
 
       <section className="todo">
 
         <div>
-          <TodoForm handleSubmit={_addItem} />
+          <TodoForm addItem={_addItem} />
         </div>
 
         <div>
           <TodoList
-            list={list}
-            handleComplete={_toggleComplete}
+             list={list}
+             toggleComplete={_toggleComplete}
+             deleteItem={deleteItem}
+             updateItem={updateItem}
           />
         </div>
       </section>
