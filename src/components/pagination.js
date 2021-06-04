@@ -8,26 +8,21 @@ export default function Pagination() {
   const context = useContext(SiteContext);
 return(
   <div className="pagination">
-      {/* previous button */}
       <button
         onClick={goToPreviousPage}
-        className={`prev ${context.currentPage === 1 ? 'disabled' : ''}`}
-      >
+        className={`prev ${context.currentPage === 1 ? 'disabled' : ''}`}>
         prev
       </button>
 
-      {/* show page numbers */}
       {getPaginationGroup().map((item, index) => (
         <button
           key={index}
           onClick={(e) => changePage(item)}
-          className={`paginationItem ${context.currentPage === item ? 'active' : null}`}
-        >
+          className={`paginationItem ${context.currentPage === item ? 'active' : null}`}>
           <span>{item}</span>
         </button>
       ))}
 
-      {/* next button */}
       <button
         onClick={goToNextPage}
         className={`next ${context.currentPage === context.pages ? 'disabled' : ''}`}
