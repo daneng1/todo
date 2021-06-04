@@ -3,7 +3,7 @@
 ## Links
 
 Deployed Site
-[https://60b6ed991f786c0007fb115f--eloquent-jang-ddfd59.netlify.app/](https://60b6ed991f786c0007fb115f--eloquent-jang-ddfd59.netlify.app/)
+[https://react-todo-danengel.netlify.app/](https://react-todo-danengel.netlify.app/)
 
 ReadMe
 [https://github.com/daneng1/todo/blob/main/README.md](https://github.com/daneng1/todo/blob/main/README.md)
