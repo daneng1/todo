@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { SiteContext } from '../context/site.js';
-import { When } from 'react-if';
+import { If, Then, Else, When, Unless } from 'react-if';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal'
@@ -16,10 +16,10 @@ export default function TodoList(props) {
   const [id, setId] = useState('');
   const [value, setValue] = useState('');
   const [handleSubmit] = useForm(todoList);
-  const [ getPaginatedData ] = usePagination();
+  const [ goToNextPage,goToPreviousPage,changePage,getPaginatedData,getPaginationGroup] = usePagination();
   const [show, setShow] = useState(false);
 
-
+  const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   const toggleField = (id) => {
