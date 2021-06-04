@@ -1,75 +1,81 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { If, Then, Else, When, Unless } from 'react-if';
 import TodoForm from './form.js';
 import TodoList from './list.js';
-import uuid from 'react-uuid';
+import Pagination from './pagination.js';
 import Navbar from 'react-bootstrap/Navbar';
-import useForm from '../hooks/formHook.js';
+import { SiteContext } from '../context/site.js';
+import useAjax from '../hooks/ajaxHook';
 import './todo.scss'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './todo.scss';
 
 function ToDo() {
-  const [list, setList] = useState([]);
-  const [values] = useForm(eat);
+  // const [list, setList] = useState([]);
+  const context = useContext(SiteContext);
+  // const [values] = useForm(eat);
+  const [getItems,addItems,deleteItems,updateItems] = useAjax();
 
+  // function eat(food) {
+  //   setList(food);
+  // }
 
-  function eat(food) {
-    setList(food);
-  }
-
-  const _addItem = (item) => {
-    item._id = uuid();
-    item.complete = false;
-    setList([...list, item]);
+  const addItem = (item) => {
+    // item._id = uuid();
+    if(!item.difficulty) {
+      item.difficulty = 1;
+    }
+    item.completed = false;
+    console.log(item);
+    addItems(item, newItem => context.setList([...context.list, newItem]));
   };
 
   const toggleComplete = id => {
 
-    let item = list.filter(i => i._id === id)[0] || {};
+    let item = context.list.filter(i => i._id === id)[0] || {};
 
     if (item._id) {
-      item.complete = !item.complete;
-      let newList = list.map(listItem => listItem._id === item._id ? item : listItem);
-      setList(newList);
+      item.completed = !item.completed;
+      updateItems(id, item , (newItem) => context.setList(context.list.map(listItem => listItem._id === item._id ? newItem : listItem)));
+      // updateItems(newList);
     }
 
   };
 
   const updateItem = (id, val) => {
-    let item = list.filter(i => i._id === id)[0] || {};
+    let item = context.list.filter(i => i._id === id)[0] || {};
 
     console.log(val);
     if (item._id) {
       item.text = val;
-      let newList = list.map(listItem => listItem._id === item._id ? item : listItem);
-      setList(newList);
+      updateItems(id, item , (newItem) => context.setList(context.list.map(listItem => listItem._id === item._id ? newItem : listItem)));
+      // setList(newList);
     }
   }
 
   const deleteItem = id => {
-    let item = list.filter(i => i._id === id)[0] || {};
+    let item = context.list.filter(i => i._id === id)[0] || {};
 
     if (item._id) {
-      let newList = list.filter(listItem => listItem._id !== id);
-      setList(newList);
+      deleteItems(id, () => context.setList(context.list.filter(listItem => listItem._id !== id)));
+      // setList(newList);
     }
   }
 
   useEffect(() => {
 
-    let newList = [
-      { _id: 1, complete: false, text: 'Clean the Kitchen', difficulty: 3, assignee: 'Person A' },
-      { _id: 2, complete: false, text: 'Do the Laundry', difficulty: 2, assignee: 'Person A' },
-      { _id: 3, complete: false, text: 'Walk the Dog', difficulty: 4, assignee: 'Person B' },
-      { _id: 4, complete: true, text: 'Do Homework', difficulty: 3, assignee: 'Person C' },
-      { _id: 5, complete: false, text: 'Take a Nap', difficulty: 1, assignee: 'Person B' },
-    ];
-
-    setList(newList);
+    // let newList = [
+    //   { _id: 1, complete: false, text: 'Clean the Kitchen', difficulty: 3, assignee: 'Person A' },
+    //   { _id: 2, complete: false, text: 'Do the Laundry', difficulty: 2, assignee: 'Person A' },
+    //   { _id: 3, complete: false, text: 'Walk the Dog', difficulty: 4, assignee: 'Person B' },
+    //   { _id: 4, complete: true, text: 'Do Homework', difficulty: 3, assignee: 'Person C' },
+    //   { _id: 5, complete: false, text: 'Take a Nap', difficulty: 1, assignee: 'Person B' },
+    // ];
+    getItems(context.setList);
   }, [])
 
   useEffect(() => {
-    const itemsToDo = list.filter(item => !item.complete).length;
+    const itemsToDo = context.list.filter(item => !item.complete).length;
     document.title = `${itemsToDo} item(s) to complete`
   })
 
@@ -81,7 +87,7 @@ function ToDo() {
       </Navbar>
       <header>
         <h6 className="counter-Header">
-          To Do List Manager ({list.filter(item => !item.complete).length})
+          To Do List Manager ({context.list.filter(item => !item.completed).length})
           </h6>
       </header>
 
@@ -89,17 +95,20 @@ function ToDo() {
 
         <div>
           <TodoForm 
-          addItem={_addItem} 
+          addItem={addItem} 
           />
         </div>
 
         <div>
           <TodoList
-            list={list}
+            // list={list}
             toggleComplete={toggleComplete}
             deleteItem={deleteItem}
             updateItem={updateItem}
           />
+          <When condition={context.pages > 1}>
+            <Pagination/>
+          </When>
         </div>
       </section>
     </>
