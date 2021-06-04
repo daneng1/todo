@@ -6,14 +6,16 @@ function SiteProvider(props) {
   const [list, setList] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [pages, setPages] = useState(1);
-  console.log(pages, list.length);
+  const [loading, setLoading] = useState(false);
   const state = {
     list,
     setList,
     pages,
     setPages,
     currentPage,
-    setCurrentPage
+    setCurrentPage,
+    loading,
+    setLoading
   }
   
   return (

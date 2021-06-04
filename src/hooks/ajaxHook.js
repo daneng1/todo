@@ -11,7 +11,7 @@ const routes = (action) => {
   }
 
   const addItems = (data, callback) => {
-    console.log(`inside addItem ${data.text}`, data.assignee, data.completed, data.difficulty);
+    // console.log(`inside addItem ${data.text}`, data.assignee, data.completed, data.difficulty);
     axios({
       method: 'post',
       url: api,
