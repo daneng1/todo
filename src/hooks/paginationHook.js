@@ -4,7 +4,7 @@ import { SiteContext } from '../context/site.js';
 const usePagination = (action) => {
 
   const context = useContext(SiteContext);
-  console.log(context.pages);
+  // console.log(context.pages);
   const dataLimit = 5 ;
   
   function goToNextPage() {
@@ -16,15 +16,15 @@ const usePagination = (action) => {
   }
 
   function changePage(value) {
-    console.log('inside changePage;', value);
+    // console.log('inside changePage;', value);
     context.setCurrentPage(value);
   }
 
   const getPaginatedData = (data) => {
-    console.log('inside paginatedData:', data);
+    // console.log('inside paginatedData:', data);
     const startIndex = context.currentPage * dataLimit - dataLimit;
     const endIndex = startIndex + dataLimit;
-    console.log(data.slice(startIndex, endIndex));
+    // console.log(data.slice(startIndex, endIndex));
     context.setPages(Math.ceil(data.length / 5));
     return data.slice(startIndex, endIndex);
   };

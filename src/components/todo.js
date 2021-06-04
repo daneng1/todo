@@ -19,7 +19,6 @@ function ToDo() {
       item.difficulty = 1;
     }
     item.completed = false;
-    console.log(item);
     addItems(item, newItem => context.setList([...context.list, newItem]));
   };
 

@@ -1,19 +1,30 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import Loader from './loader';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import useForm from '../hooks/formHook.js';
+import { SiteContext } from '../context/site.js';
 import './form.scss';
 
 export default function TodoForm(props) {
+  const context = useContext(SiteContext);
   const [item, setItem] = useState({});
   const [handleSubmit,handleChange] = useForm(submit);
 
   function submit(item) {
-    console.log(item);
     props.addItem(item);
     const newItem = {};
     setItem(newItem);
+  }
+
+  function toggleLoading() {
+    // e.preventDefault;
+    context.setLoading(true);
+    console.log('inside toggelLoading:', context.loading);
+    setTimeout(() =>{
+      context.setLoading(false);
+    }, 1500)
   }
 
   return (
@@ -51,9 +62,10 @@ export default function TodoForm(props) {
             style={{ width: '200px' }}/>
           <span className="font-weight-normal indigo-text ml-2 mt-0">5</span>
         </Form.Group>
-        <Button style={{ width: '100px' }}className="mt-4" aria-controls="example-fade-text" variant="primary" type="submit">
+        <Button onClick={toggleLoading} style={{ width: '100px' }}className="mt-4" aria-controls="example-fade-text" variant="primary" type="submit">
           Add Item
         </Button>
+        <Loader/>
       </Form>
     </section>
   );

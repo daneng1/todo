@@ -24,12 +24,8 @@ export default function TodoList(props) {
 
   const toggleField = (id) => {
     setOpen(!open);
-    console.log(id);
     setId(id);
   }
-  useEffect(() => {
-    console.log(value);
-  })
 
   function todoList(todo) {
     setValue(todo);
