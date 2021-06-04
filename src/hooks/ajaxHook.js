@@ -1,52 +1,49 @@
-import React from 'react';
-import superagent from 'superagent';
+import axios from 'axios';
 
-const todoAPI = 'https://api-js401.herokuapp.com/api/v1/todo';
 
 const routes = (action) => {
+  const api = 'https://danengel-api-server.herokuapp.com/todo';
 
-  const getItems = async (e) =>{
-    try{
-    const raw = await superagent.get(todoAPI);
-    const results = raw.body;
-    return results;
-    } catch (e) {
-      const error = e.body;
-      return error;
-    }
+  const getItems = (callback) => {
+    axios.get(api).then(response => {
+      const array = response.data;
+      callback(array);
+    })
   }
 
-  const addItems = (e) =>{
-    try{
-      const raw = await superagent.put(todoAPI).send(?body);
-      const results = raw.body;
-      return results;
-      } catch (e) {
-        const error = e.body;
-        return error;
-      }
+  const addItems = (data, callback) => {
+    console.log(`inside addItem ${data.text}`, data.assignee, data.completed, data.difficulty);
+    axios({
+      method: 'post',
+      url: api,
+      mode: 'cors',
+      cache: 'no-cache',
+      headers: { 'Content-Type': 'application/json' },
+      data: data,
+    }).then(response => {
+      const newItem = response.data;
+      callback(newItem);
+    }).catch(err => console.log(err))
   }
 
-  const deleteItems = (e) =>{
-    try{
-      const raw = await superagent.delete(todoAPI).send(id);
-      const results = raw.body;
-      return results;
-      } catch (e) {
-        const error = e.body;
-        return error;
-      }
+  const deleteItems = (id, callback) => {
+    axios({
+      method: 'delete',
+      url: `${api}/${id}`
+    }).then(response => {
+      callback();
+    }).catch(err => console.log(err));
   }
 
-  const updateItems = (e) =>{
-    try{
-      const raw = await superagent.update(todoAPI).send(?body);
-      const results = raw.body;
-      return results;
-      } catch (e) {
-        const error = e.body;
-        return error;
-      }
+  const updateItems = (id, data, callback) => {
+    axios({
+      method: 'put',
+      url: `${api}/${id}`,
+      data: data
+    }).then(response => {
+      const updatedItem = response.data;
+      callback(updatedItem);
+    }).catch(err => console.log(err));
   }
 
   return [
@@ -56,3 +53,4 @@ const routes = (action) => {
     updateItems
   ]
 }
+export default routes;
