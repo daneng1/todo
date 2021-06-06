@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { SiteContext } from '../context/site.js';
-import { If, Then, Else, When, Unless } from 'react-if';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal'
@@ -16,7 +15,7 @@ export default function TodoList(props) {
   const [id, setId] = useState('');
   const [value, setValue] = useState('');
   const [handleSubmit] = useForm(todoList);
-  const [ goToNextPage,goToPreviousPage,changePage,getPaginatedData,getPaginationGroup] = usePagination();
+  const [goToNextPage, goToPreviousPage, changePage, getPaginatedData, getPaginationGroup] = usePagination();
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -31,10 +30,13 @@ export default function TodoList(props) {
     setValue(todo);
     props.updateItem(id, value)
   }
+  console.log('show', show);
 
   return (
     <div>
       {getPaginatedData(context.list).map((item) => (
+        <div>
+
       <Modal.Dialog style={{ width: '40vw' }} key={item._id} className="m-2 shadow">
         <Modal.Header >
           <Button style={{ width: '80px', fontSize: '10px', borderRadius: '20px' }} action onClick={() => props.toggleComplete(item._id)} variant={item.completed ? "danger" : "success"} className={`complete-${item.completed.toString()}`}>{item.completed.toString() === "true" ? "Complete" : "Pending"}</Button>
@@ -48,38 +50,32 @@ export default function TodoList(props) {
         </Modal.Body>
 
         <Modal.Footer>
-          <Button variant="primary"onClick={() => { handleShow; toggleField(item._id) }}>Update Item</Button>
+          <Button variant="primary"onClick={() => { handleShow(); toggleField(item._id) }}>Update Item</Button>
         </Modal.Footer>
       </Modal.Dialog>
-      // <CardDeck>
-        
-      //     <Card className="m-2" style={{ width: '30vw' }} key={item._id}>
-      //       <Card.Header horizontal >
-      //         <Button action onClick={() => props.toggleComplete(item._id)} variant={item.complete ? "danger" : "success"}
-      //           className={`complete-${item.complete.toString()}`}>Status</Button>
-      //         <Card.Title>{item.assignee}</Card.Title>
-      //         <Button closeButton onClick={() => props.deleteItem(item._id)}>X</Button>
+        </div>
+      ))}
 
-      //       </Card.Header>
-      //       <Card.Body>
-      //         <Card.Text>
-      //           {item.text}
-      //         </Card.Text>
-      //         <Card.Text>
-      //           Difficulty: {item.difficulty}
-      //         </Card.Text>
-      //         <Button onClick={() => { handleShow; toggleField(item._id) }}>Update Item</Button>
-      //       </Card.Body>
+        <Modal show={show} onHide={handleClose}>
+        <Modal.Header >
+          <Modal.Title>Modal heading</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
 
-      //     </Card>
-        ))}
-        <When condition={open === true}>
-          <Form className="mt-3" onSubmit={(e) => { handleSubmit(e); toggleField(id); }}>
+          <Form className="mt-3 m-2" onSubmit={(e) => { handleSubmit(e); toggleField(id); }}>
             <FormControl placeholder="update a task text" onChange={(e) => setValue(e.target.value)} />
-            <Button type="submit" >Submit</Button>
           </Form>
-        </When>
-      {/* </CardDeck> */}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Cancel
+          </Button>
+          <Button variant="primary" onClick={(e) => { handleSubmit(e); toggleField(id); handleClose()}}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
     </div>
   );
 
