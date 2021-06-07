@@ -18,15 +18,20 @@ function ToDo() {
     if(!item.difficulty) {
       item.difficulty = 1;
     }
-    item.completed = false;
+    item.completed = 'pending';
+    console.log(item);
     addItems(item, newItem => context.setList([...context.list, newItem]));
   };
 
   const toggleComplete = id => {
     let item = context.list.filter(i => i._id === id)[0] || {};
-
+    let status = item.completed;
+    let temp = '';
     if (item._id) {
-      item.completed = !item.completed;
+      if (status === "pending") temp = "in-progress";
+      if (status === "in-progress") temp = "complete";
+      if (status === "complete") temp = "pending";
+      item.completed = temp;
       updateItems(id, item , (newItem) => context.setList(context.list.map(listItem => listItem._id === item._id ? newItem : listItem)));
     }
   };
@@ -53,7 +58,7 @@ function ToDo() {
   }, [])
 
   useEffect(() => {
-    const itemsToDo = context.list.filter(item => !item.complete).length;
+    const itemsToDo = context.list.filter(item => item.completed === 'pending').length;
     document.title = `${itemsToDo} item(s) to complete`
   })
 
@@ -65,7 +70,7 @@ function ToDo() {
       </Navbar>
       <header>
         <h6 className="counter-Header">
-          To Do List Manager ({context.list.filter(item => !item.completed).length})
+          To Do List Manager ({context.list.filter(item => item.completed === 'pending').length})
           </h6>
       </header>
       <section className="todo">
