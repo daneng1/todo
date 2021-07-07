@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import TodoForm from './form.js';
 import TodoList from './list.js';
 import Navbar from 'react-bootstrap/Navbar';
-import useForm from '../hooks/formHook.js';
 import './todo.scss'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './todo.scss';
@@ -67,8 +66,6 @@ const ToDo = () => {
 
   const updateItem = (id, val) => {
     let item = list.filter(i => i._id === id)[0] || {};
-
-    // console.log(val);
     if (item._id) {
       item.text = val;
       let newList = list.map(listItem => listItem._id === item._id ? item : listItem);
@@ -78,7 +75,6 @@ const ToDo = () => {
 
   const deleteItem = id => {
     let item = list.filter(i => i._id === id)[0] || {};
-
     if (item._id) {
       let newList = list.filter(listItem => listItem._id !== id);
       setList(newList);

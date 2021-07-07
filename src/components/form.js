@@ -19,9 +19,7 @@ export default function TodoForm(props) {
   }
 
   function toggleLoading() {
-    // e.preventDefault;
     context.setLoading(true);
-    console.log('inside toggelLoading:', context.loading);
     setTimeout(() =>{
       context.setLoading(false);
     }, 1500)

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const routes = (action) => {
+const routes = () => {
   const api = 'https://danengel-api-server.herokuapp.com/todo';
 
   const getItems = (callback) => {
@@ -11,7 +11,7 @@ const routes = (action) => {
   }
 
   const addItems = (data, callback) => {
-    // console.log(`inside addItem ${data.text}`, data.assignee, data.completed, data.difficulty);
+
     axios({
       method: 'post',
       url: api,

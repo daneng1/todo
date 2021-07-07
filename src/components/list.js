@@ -27,8 +27,6 @@ export default function TodoList(props) {
     setId(id);
   }
 
-  // TODO: new state variable starting as All, tied to dropdown,
-  // then run through if statements below to set filteredList
   let list = context.list;
   let filteredList = list;
 
@@ -37,7 +35,6 @@ export default function TodoList(props) {
     props.updateItem(id, value)
   }
 
-  // sort by pending, completed or all
     if (filter === "complete") {
       filteredList = list.filter(item => item.completed === "complete");
     } else if (filter === "pending") {
@@ -60,15 +57,12 @@ export default function TodoList(props) {
   }
 
 
-  // sort by text, name and difficulty
-  console.log(filteredList);
   if (context.sortSelected === 'name') {
     filteredList.sort((a, b) => {
       if (a.assignee.toLowerCase() > b.assignee.toLowerCase()) return 1;
       if (a.assignee.toLowerCase() < b.assignee.toLowerCase()) return -1;
       return 0;
     })
-    console.log(filteredList);
 
   } else if (context.sortSelected === 'difficulty') {
     filteredList.sort((a, b) => {
@@ -82,9 +76,8 @@ export default function TodoList(props) {
       if (a.text.toLowerCase() < b.text.toLowerCase()) return -1;
       return 0;
     })
-    console.log(filteredList);
   }
-  // console.log('inside sortSelected', context.sortSelected);
+
 
   return (
     <div>

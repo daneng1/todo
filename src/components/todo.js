@@ -19,7 +19,6 @@ function ToDo() {
       item.difficulty = 1;
     }
     item.completed = 'pending';
-    console.log(item);
     addItems(item, newItem => context.setList([...context.list, newItem]));
   };
 
@@ -47,7 +46,6 @@ function ToDo() {
 
   const deleteItem = id => {
     let item = context.list.filter(i => i._id === id)[0] || {};
-
     if (item._id) {
       deleteItems(id, () => context.setList(context.list.filter(listItem => listItem._id !== id)));
     }
@@ -81,7 +79,6 @@ function ToDo() {
         </div>
         <div>
           <TodoList
-            // list={list}
             toggleComplete={toggleComplete}
             deleteItem={deleteItem}
             updateItem={updateItem}
