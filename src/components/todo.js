@@ -80,11 +80,11 @@ function ToDo() {
 
   return (
     <>
-      <Navbar bg="primary" expand="lg">
-        <Navbar.Brand className="brand" href="#home">
+      <Navbar bg="primary" variant="light" expand="lg">
+        <h1 className="brand" href="#home">
           To Do List Manager (
           {context.list.filter((item) => item.completed === "pending").length} Pending) 
-        </Navbar.Brand>
+        </h1>
       </Navbar>
       <section className="todo">
         <div>
