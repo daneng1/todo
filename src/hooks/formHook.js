@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 
 const useForm = (action) => {
   const [values, setValues] = useState({});
@@ -8,15 +8,11 @@ const useForm = (action) => {
     action(values);
   };
 
-  const handleChange = e => {
+  const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
 
-  return [
-    handleSubmit,
-    handleChange,
-    values
-  ]
-}
+  return [handleSubmit, handleChange, values];
+};
 
 export default useForm;

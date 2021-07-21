@@ -30,15 +30,10 @@ const ToDo = () => {
   };
 
   const _toggleComplete = id => {
-
     let item = list.filter(i => i._id === id)[0] || {};
-
     if (item._id) {
-
       item.complete = !item.complete;
-
       let url = `${todoAPI}/${id}`;
-
       fetch(url, {
         method: 'put',
         mode: 'cors',

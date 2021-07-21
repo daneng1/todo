@@ -1,81 +1,94 @@
-import React, { useEffect, useContext } from 'react';
-import { When } from 'react-if';
-import TodoForm from './form.js';
-import TodoList from './list.js';
-import Pagination from './pagination.js';
-import Navbar from 'react-bootstrap/Navbar';
-import { SiteContext } from '../context/site.js';
-import useAjax from '../hooks/ajaxHook';
-import './todo.scss'
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './todo.scss';
+import React, { useEffect, useContext } from "react";
+import { When } from "react-if";
+
+import TodoForm from "./form.js";
+import TodoList from "./list.js";
+import Pagination from "./pagination.js";
+import { SiteContext } from "../context/site.js";
+import useAjax from "../hooks/ajaxHook";
+
+import Navbar from "react-bootstrap/Navbar";
+import "./todo.scss";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./todo.scss";
 
 function ToDo() {
   const context = useContext(SiteContext);
-  const [getItems,addItems,deleteItems,updateItems] = useAjax();
+  const [getItems, addItems, deleteItems, updateItems] = useAjax();
 
   const addItem = (item) => {
-    if(!item.difficulty) {
+    if (!item.difficulty) {
       item.difficulty = 1;
     }
-    item.completed = 'pending';
-    addItems(item, newItem => context.setList([...context.list, newItem]));
+    item.completed = "pending";
+    addItems(item, (newItem) => context.setList([...context.list, newItem]));
   };
 
-  const toggleComplete = id => {
-    let item = context.list.filter(i => i._id === id)[0] || {};
+  const toggleComplete = (id) => {
+    let item = context.list.filter((i) => i._id === id)[0] || {};
     let status = item.completed;
-    let temp = '';
+    let temp = "";
     if (item._id) {
       if (status === "pending") temp = "in-progress";
       if (status === "in-progress") temp = "complete";
       if (status === "complete") temp = "pending";
       item.completed = temp;
-      updateItems(id, item , (newItem) => context.setList(context.list.map(listItem => listItem._id === item._id ? newItem : listItem)));
+      updateItems(id, item, (newItem) =>
+        context.setList(
+          context.list.map((listItem) =>
+            listItem._id === item._id ? newItem : listItem
+          )
+        )
+      );
     }
   };
 
   const updateItem = (id, val) => {
-    let item = context.list.filter(i => i._id === id)[0] || {};
+    let item = context.list.filter((i) => i._id === id)[0] || {};
 
     if (item._id) {
       item.text = val;
-      updateItems(id, item , (newItem) => context.setList(context.list.map(listItem => listItem._id === item._id ? newItem : listItem)));
+      updateItems(id, item, (newItem) =>
+        context.setList(
+          context.list.map((listItem) =>
+            listItem._id === item._id ? newItem : listItem
+          )
+        )
+      );
     }
-  }
+  };
 
-  const deleteItem = id => {
-    let item = context.list.filter(i => i._id === id)[0] || {};
+  const deleteItem = (id) => {
+    let item = context.list.filter((i) => i._id === id)[0] || {};
     if (item._id) {
-      deleteItems(id, () => context.setList(context.list.filter(listItem => listItem._id !== id)));
+      deleteItems(id, () =>
+        context.setList(context.list.filter((listItem) => listItem._id !== id))
+      );
     }
-  }
+  };
 
   useEffect(() => {
     getItems(context.setList);
-  }, [])
+  }, []);
 
   useEffect(() => {
-    const itemsToDo = context.list.filter(item => item.completed === 'pending').length;
-    document.title = `${itemsToDo} item(s) to complete`
-  })
+    const itemsToDo = context.list.filter(
+      (item) => item.completed === "pending"
+    ).length;
+    document.title = `${itemsToDo} item(s) to complete`;
+  });
 
   return (
     <>
       <Navbar bg="primary" expand="lg">
-        <Navbar.Brand className="brand" href="#home">HOME</Navbar.Brand>
-        
+        <Navbar.Brand className="brand" href="#home">
+          To Do List Manager (
+          {context.list.filter((item) => item.completed === "pending").length} Pending) 
+        </Navbar.Brand>
       </Navbar>
-      <header>
-        <h6 className="counter-Header">
-          To Do List Manager ({context.list.filter(item => item.completed === 'pending').length})
-          </h6>
-      </header>
       <section className="todo">
         <div>
-          <TodoForm 
-          addItem={addItem} 
-          />
+          <TodoForm addItem={addItem} />
         </div>
         <div>
           <TodoList
@@ -84,13 +97,12 @@ function ToDo() {
             updateItem={updateItem}
           />
           <When condition={context.pages > 1}>
-            <Pagination/>
+            <Pagination />
           </When>
         </div>
       </section>
     </>
   );
-
 }
 
 export default ToDo;

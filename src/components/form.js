@@ -1,10 +1,12 @@
-import React, { useState, useEffect, useContext } from 'react';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
+import React, { useState, useContext } from 'react';
+
 import Loader from './loader';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import useForm from '../hooks/formHook.js';
 import { SiteContext } from '../context/site.js';
+
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './form.scss';
 
 export default function TodoForm(props) {
