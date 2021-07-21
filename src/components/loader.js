@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-// import context from 'react-bootstrap/esm/AccordionContext';
 import { When } from 'react-if';
 import { SiteContext } from '../context/site.js';
 import './loader.scss';
