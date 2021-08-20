@@ -1,7 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@400&display=swap');
 
-
-
 body, html {
   height: 100%;
   margin: 0;
@@ -27,13 +25,11 @@ body, html {
 }
 .brand{
   font-size: clamp(18px, 3vw, 30px);
-  margin-left: 27px;
+  margin: 0 auto;
   color: rgb(240, 240, 240);
   font-family: 'Kanit', sans-serif;
 }
-.brand:hover{
-  
-}
+
 .counter-Header {
   background-color: rgb(74, 74, 74);
   color: rgb(240, 240, 240);
@@ -43,19 +39,26 @@ body, html {
   margin-top: 20px;
   font-size: clamp(18px, 3vw, 30px);
 }
-.todo {
 
-  display:flex;
-  flex-direction:row;
-  justify-content: flex-start;
-  margin: 2em;
+.todo {
+  @media screen and (min-width: 650px) {
+    display:flex;
+    flex-direction:row;
+    justify-content: flex-start;
+    margin: 2em;
+  } 
+
+  @media screen and (max-width: 649px) {
+    display:flex;
+    flex-direction:column;
+    justify-content: flex-start;
+    margin: 2em;
+  } 
 
   form {
-
       display:flex;
       flex-direction:column;
       margin-right: 2em;
-
       label {
           display: flex;
           flex-direction:column;
